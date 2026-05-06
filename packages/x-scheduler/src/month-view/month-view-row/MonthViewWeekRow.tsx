@@ -44,7 +44,7 @@ export default function MonthViewWeekRow(props: MonthViewWeekRowProps) {
   const adapter = useAdapterContext();
   const store = useEventCalendarStoreContext();
   const showWeekNumber = useStore(store, eventCalendarPreferenceSelectors.showWeekNumber);
-  const { classes, localeText } = useEventCalendarStyledContext();
+  const { schedulerId, classes, localeText } = useEventCalendarStyledContext();
   const occurrences = useEventOccurrencesWithDayGridPosition({ days, occurrencesMap });
   const weekNumber = adapter.getWeekNumber(days[0].value);
 
@@ -56,7 +56,9 @@ export default function MonthViewWeekRow(props: MonthViewWeekRowProps) {
     [adapter, days],
   );
 
-  const colOffset = showWeekNumber ? 2 : 1;
+  const weekNumberId = showWeekNumber
+    ? `${schedulerId}-MonthViewWeekNumber-${weekNumber}`
+    : undefined;
 
   return (
     <MonthViewRow
@@ -70,9 +72,9 @@ export default function MonthViewWeekRow(props: MonthViewWeekRowProps) {
       {showWeekNumber && (
         <MonthViewWeekNumberCell
           className={classes.monthViewWeekNumberCell}
-          role="rowheader"
+          id={weekNumberId}
           aria-label={localeText.weekNumberAriaLabel(weekNumber)}
-          aria-colindex={1}
+          aria-hidden="true"
         >
           {weekNumber}
         </MonthViewWeekNumberCell>
@@ -84,7 +86,8 @@ export default function MonthViewWeekRow(props: MonthViewWeekRowProps) {
           day={day}
           maxEvents={maxEvents}
           row={occurrences}
-          colIndex={dayIdx + colOffset}
+          colIndex={dayIdx + 1}
+          ariaLabelledBy={weekNumberId}
         />
       ))}
     </MonthViewRow>

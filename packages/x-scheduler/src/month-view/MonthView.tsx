@@ -208,7 +208,7 @@ export const MonthView = React.memo(
             rowTypes={MONTH_VIEW_ROW_TYPES}
             rowsPerType={monthViewRowsPerType}
             aria-rowcount={1 + weeks.length}
-            aria-colcount={(showWeekNumber ? 1 : 0) + (weeks[0]?.length ?? 0)}
+            aria-colcount={weeks[0]?.length ?? 0}
           >
             <MonthViewHeader
               className={classes.monthViewHeader}
@@ -218,8 +218,7 @@ export const MonthView = React.memo(
               {showWeekNumber && (
                 <MonthViewWeekHeaderCell
                   className={classes.monthViewWeekHeaderCell}
-                  role="columnheader"
-                  aria-colindex={1}
+                  aria-hidden="true"
                 >
                   {localeText.weekAbbreviation}
                 </MonthViewWeekHeaderCell>
@@ -229,7 +228,7 @@ export const MonthView = React.memo(
                   className={classes.monthViewHeaderCell}
                   key={weekDay.key}
                   date={weekDay}
-                  aria-colindex={dayIdx + (showWeekNumber ? 2 : 1)}
+                  aria-colindex={dayIdx + 1}
                   skipDataCurrent
                 >
                   {adapter.formatByString(weekDay.value, 'ccc')}

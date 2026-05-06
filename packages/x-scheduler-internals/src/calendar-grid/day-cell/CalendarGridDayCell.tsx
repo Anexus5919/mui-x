@@ -108,7 +108,8 @@ export const CalendarGridDayCell = React.forwardRef(function CalendarGridDayCell
     .join(' ');
 
   const keyboardProps = {
-    // Tab flows cell to events to next cell. Arrow keys navigate via setFocusedCell.
+    // All cells are always tabbable so Tab flows through: cell → events → next cell → events.
+    // Arrow keys navigate programmatically via setFocusedCell, independent of tabIndex.
     tabIndex: 0,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,

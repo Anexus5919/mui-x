@@ -6,7 +6,14 @@ export const TimelineGridCell = React.forwardRef(function TimelineGridCell(
   componentProps: TimelineGridCell.Props,
   forwardedRef: React.ForwardedRef<HTMLDivElement>,
 ) {
-  const { className, render, style, ...elementProps } = componentProps;
+  const {
+    // Rendering props
+    className,
+    render,
+    style,
+    // Props forwarded to the DOM element
+    ...elementProps
+  } = componentProps;
 
   const role = (elementProps as { role?: React.AriaRole }).role ?? 'gridcell';
 
