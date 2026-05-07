@@ -19,12 +19,9 @@ export const CalendarGridHeaderRow = React.forwardRef(function CalendarGridHeade
 
   const cellsRefs = React.useRef<(HTMLDivElement | null)[]>([]);
 
-  const elementAriaRowIndex = (elementProps as { 'aria-rowindex'?: number })['aria-rowindex'];
-  const ariaRowIndex = typeof elementAriaRowIndex === 'number' ? elementAriaRowIndex : 1;
-
   const element = useRenderElement('div', componentProps, {
     ref: [forwardedRef],
-    props: [elementProps, { role: 'row', 'aria-rowindex': ariaRowIndex }],
+    props: [{ role: 'row', 'aria-rowindex': 1 }, elementProps],
   });
 
   return <CompositeList elementsRef={cellsRefs}>{element}</CompositeList>;

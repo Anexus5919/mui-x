@@ -103,9 +103,8 @@ export const CalendarGridDayCell = React.forwardRef(function CalendarGridDayCell
 
   // Associate this cell with its column header, matching the pattern used by DayEvent and TimeEvent.
   // Any additional aria-labelledby passed by the styled layer (e.g., an "All day" row header) is appended.
-  const ariaLabelledBy = [columnHeaderId, elementProps['aria-labelledby']]
-    .filter(Boolean)
-    .join(' ');
+  const { 'aria-labelledby': elementAriaLabelledBy, ...restElementProps } = elementProps;
+  const ariaLabelledBy = [columnHeaderId, elementAriaLabelledBy].filter(Boolean).join(' ');
 
   const keyboardProps = {
     // All cells are always tabbable so Tab flows through: cell → events → next cell → events.
@@ -115,20 +114,17 @@ export const CalendarGridDayCell = React.forwardRef(function CalendarGridDayCell
     onFocus: handleFocus,
   };
 
-  const elementAriaColIndex = (elementProps as { 'aria-colindex'?: number })['aria-colindex'];
-  const ariaColIndex = typeof elementAriaColIndex === 'number' ? elementAriaColIndex : index + 1;
-
   const element = useRenderElement('div', componentProps, {
     ref: [forwardedRef, dropTargetRef, listItemRef, cellRef],
     props: [
-      elementProps,
       {
         role: 'gridcell',
         'aria-labelledby': ariaLabelledBy || undefined,
-        'aria-colindex': ariaColIndex,
+        'aria-colindex': index + 1,
       },
       keyboardProps,
       eventCreationProps,
+      restElementProps,
     ],
   });
 

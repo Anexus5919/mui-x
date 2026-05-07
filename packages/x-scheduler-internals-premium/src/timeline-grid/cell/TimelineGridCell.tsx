@@ -15,11 +15,9 @@ export const TimelineGridCell = React.forwardRef(function TimelineGridCell(
     ...elementProps
   } = componentProps;
 
-  const role = (elementProps as { role?: React.AriaRole }).role ?? 'gridcell';
-
   return useRenderElement('div', componentProps, {
     ref: [forwardedRef],
-    props: [elementProps, { role }],
+    props: [{ role: 'gridcell' }, elementProps],
   });
 });
 
