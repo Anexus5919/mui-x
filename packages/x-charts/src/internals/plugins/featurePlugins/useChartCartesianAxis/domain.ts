@@ -110,7 +110,7 @@ function getActualAxisExtrema(
     min = axisExtrema.max;
   }
 
-  if ('min' in axisExtrema && axisExtrema.min != null && axisExtrema.min > minData) {
+  if ('min' in axisExtrema && axisExtrema.min != null && axisExtrema.min > maxData) {
     max = axisExtrema.min;
   }
 
