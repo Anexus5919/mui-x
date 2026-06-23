@@ -261,7 +261,7 @@ describe('FilePart', () => {
     const link = screen.getByText(SCRIPT_URL).closest('a');
 
     expect(link).not.to.equal(null);
-    expect(link!.getAttribute('href')).to.equal('');
+    expect(link!.getAttribute('href')).to.equal(null);
   });
 
   it('keeps data: image sources on the img src', () => {
@@ -336,7 +336,7 @@ describe('SourceUrlPart', () => {
     const link = screen.getByText(SCRIPT_URL).closest('a');
 
     expect(link).not.to.equal(null);
-    expect(link!.getAttribute('href')).to.equal('');
+    expect(link!.getAttribute('href')).to.equal(null);
   });
 });
 
@@ -353,7 +353,7 @@ describe('Part primitives URL sanitization', () => {
     const link = screen.getByText(SCRIPT_URL).closest('a');
 
     expect(link).not.to.equal(null);
-    expect(link!.getAttribute('href')).to.equal('');
+    expect(link!.getAttribute('href')).to.equal(null);
   });
 
   it('FilePart neutralizes javascript: URLs in href', () => {
@@ -373,7 +373,39 @@ describe('Part primitives URL sanitization', () => {
     const link = screen.getByText('x.pdf').closest('a');
 
     expect(link).not.to.equal(null);
-    expect(link!.getAttribute('href')).to.equal('');
+    expect(link!.getAttribute('href')).to.equal(null);
+  });
+});
+
+describe('Default part renderers URL sanitization', () => {
+  it('renderDefaultSourceUrlPart neutralizes javascript: URLs in href', () => {
+    render(
+      <React.Fragment>
+        {renderDefaultSourceUrlPart({
+          part: { type: 'source-url', sourceId: 's1', url: SCRIPT_URL },
+        } as any)}
+      </React.Fragment>,
+    );
+
+    const link = screen.getByText(SCRIPT_URL).closest('a');
+
+    expect(link).not.to.equal(null);
+    expect(link!.getAttribute('href')).to.equal(null);
+  });
+
+  it('renderDefaultFilePart neutralizes javascript: URLs in href', () => {
+    render(
+      <React.Fragment>
+        {renderDefaultFilePart({
+          part: { type: 'file', mediaType: 'application/pdf', url: SCRIPT_URL, filename: 'x.pdf' },
+        } as any)}
+      </React.Fragment>,
+    );
+
+    const link = screen.getByText('x.pdf').closest('a');
+
+    expect(link).not.to.equal(null);
+    expect(link!.getAttribute('href')).to.equal(null);
   });
 });
 

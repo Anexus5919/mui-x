@@ -62,12 +62,12 @@ export const renderDefaultFilePart: ChatPartRenderer<ChatFileMessagePart> = ({ p
     return <img alt={part.filename ?? ''} src={part.url} />;
   }
 
-  return <a href={safeUri(part.url)}>{part.filename ?? part.url}</a>;
+  return <a href={safeUri(part.url) || undefined}>{part.filename ?? part.url}</a>;
 };
 
 export const renderDefaultSourceUrlPart: ChatPartRenderer<ChatSourceUrlMessagePart> = ({
   part,
-}) => <a href={safeUri(part.url)}>{part.title ?? part.url}</a>;
+}) => <a href={safeUri(part.url) || undefined}>{part.title ?? part.url}</a>;
 
 export const renderDefaultSourceDocumentPart: ChatPartRenderer<ChatSourceDocumentMessagePart> = ({
   part,

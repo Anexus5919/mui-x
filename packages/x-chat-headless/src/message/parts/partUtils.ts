@@ -24,6 +24,11 @@ export function safeUri(uri: string | null | undefined): string {
   try {
     const trimmed = uri.trim();
 
+    // Protocol-relative //host resolves to an external origin despite carrying no scheme.
+    if (/^[/\\]{2}/.test(trimmed)) {
+      return '';
+    }
+
     if (trimmed.startsWith('#') || trimmed.startsWith('/')) {
       return trimmed;
     }

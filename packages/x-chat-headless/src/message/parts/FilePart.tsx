@@ -114,7 +114,7 @@ export const FilePart = React.forwardRef(function FilePart(
 
   return (
     <Root {...rootProps}>
-      <LinkSlot href={safeUri(part.url)} rel="noreferrer noopener" target="_blank" {...linkProps}>
+      <LinkSlot href={safeUri(part.url) || undefined} rel="noreferrer noopener" target="_blank" {...linkProps}>
         {ownerState.image ? (
           <Preview alt={part.filename ?? ''} src={part.url} {...previewProps} />
         ) : (
