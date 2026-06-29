@@ -71,7 +71,10 @@ export default function ChartsYHighlight(props: {
         if (index >= 0) {
           const bucketStart = Math.floor(index / bucketSize) * bucketSize;
           const bucketEnd = Math.min(bucketStart + bucketSize - 1, data.length - 1);
-          bandStart = yScale(data[bucketStart])! - (step - yScale.bandwidth()) / 2;
+          // On a reversed axis bucketStart sits at the bucket's right edge, so take the lower edge.
+          bandStart =
+            Math.min(yScale(data[bucketStart])!, yScale(data[bucketEnd])!) -
+            (step - yScale.bandwidth()) / 2;
           bandSize = (bucketEnd - bucketStart + 1) * step;
         }
       }

@@ -98,7 +98,11 @@ export function createGetBucketBarDimensions(params: {
     max: number,
     groupIndex: number,
   ) {
-    const spanStart = baseScale(baseScaleConfig.data![startIndex])!;
+    // On a reversed axis startIndex sits at the bucket's right edge, so take the lower coordinate.
+    const spanStart = Math.min(
+      baseScale(baseScaleConfig.data![startIndex])!,
+      baseScale(baseScaleConfig.data![endIndex])!,
+    );
     const bucketCount = endIndex - startIndex + 1;
     const bucketStride = bucketCount * step;
 
